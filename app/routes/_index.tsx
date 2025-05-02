@@ -1,6 +1,8 @@
 import { useLoaderData } from "@remix-run/react";
 import { WifiHighIcon, WifiIcon, WifiOffIcon } from "lucide-react";
 
+import { Button } from "~/components/ui/button";
+
 export async function loader() {
   const res = await fetch("http://localhost:8080/devices");
   return Response.json(await res.json());
