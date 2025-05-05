@@ -7,6 +7,8 @@ export async function loader() {
   const res = await fetch("http://localhost:8080/devices");
   return Response.json(await res.json());
 }
+import { Outlet } from "@remix-run/react";
+
 
 export default function Index() {
   const devices = useLoaderData<typeof loader>();
