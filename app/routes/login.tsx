@@ -31,7 +31,7 @@ export default function Index() {
             email: "",
         },
     })
-    
+
     // Action à faire après envoi du form
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
