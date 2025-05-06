@@ -1,4 +1,3 @@
-import * as React from "react"
 import { WifiHighIcon, WifiIcon, WifiOffIcon } from "lucide-react";
 
 type DeviceCardProps = {
@@ -16,7 +15,7 @@ export default function DeviceCard({name, cpu, ram, room, status}: DeviceCardPro
             <div>
                 <p className="text-3xl">{name}</p>
                 <p className="text-base text-stone-400">{cpu}</p>
-                <p className="text-base text-stone-400">{ram}go RAM</p>
+                <p className="text-base text-stone-400">{ram && ram + "go RAM"}</p>
             </div>
             <>
             {status === "ONLINE" ? (

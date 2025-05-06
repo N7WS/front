@@ -1,5 +1,4 @@
 import { useLoaderData } from "@remix-run/react";
-import { WifiHighIcon, WifiIcon, WifiOffIcon } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
 import DeviceCard from "~/components/ui/deviceCard";
 
@@ -21,8 +20,8 @@ export default function Index() {
 
             <div className="flex flex-col gap-2 w-full">
               {devices.map((device : any) => (
-                <DeviceCard name="Morpheus" cpu="cpu" ram={16} room="D208" status="ONLINE" />
-                // <DeviceCard name={device.name} cpu="cpu" ram={16} room="ROOM" status={device.status} />
+                // <DeviceCard name="Morpheus" cpu="cpu" ram={16} room="D208" status="ONLINE" />
+                <DeviceCard name={device.name} cpu={device.deviceConfigs[0]?.cpuName} ram={device.deviceConfigs[0]?.ramSize} room={device.room} status={device.status} />
               ))}
             </div>
 
