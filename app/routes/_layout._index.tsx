@@ -1,6 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
-import DeviceCard from "~/components/ui/deviceCard";
+import DeviceCard from "~/components/custom/device-card";
 
 export async function loader() {
   const res = await fetch("http://localhost:8080/devices");
