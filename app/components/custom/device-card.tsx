@@ -5,13 +5,14 @@ type DeviceCardProps = {
     cpu: string;
     ram: number;
     room: string;
-    status: string
+    status: string;
+    onClick?: (arg? : any) => void;
     // lastUpdate: Date; // TODO
 };
 
-export default function DeviceCard({name, cpu, ram, room, status}: DeviceCardProps) {
+export default function DeviceCard({name, cpu, ram, room, status, onClick}: DeviceCardProps) {
     return (
-        <div key={name} className="flex items-center gap-4 bg-zinc-100 p-4 w-full h-28 rounded-xl justify-between">
+        <div key={name} className="flex items-center gap-4 bg-zinc-100 p-4 w-full h-28 rounded-xl justify-between" onClick={onClick}>
             <div className="flex flex-col">
                 <p className="text-2xl">{name}</p>
                 <p className="text-base text-stone-400">{cpu}</p>
