@@ -21,7 +21,7 @@ export default function Index() {
             <div className="flex flex-col gap-2 w-full">
               {devices.map((device : any) => (
                 // <DeviceCard name="Morpheus" cpu="cpu" ram={16} room="D208" status="ONLINE" />
-                <DeviceCard name={device.name} cpu={device.deviceConfigs[0]?.cpuName} ram={device.deviceConfigs[0]?.ramSize} room={device.room} status={device.status} />
+                <DeviceCard key={device.name} name={device.name} cpu={device.deviceConfigs[0]?.cpuName} ram={device.deviceConfigs[0]?.ramSize} room={device.room} status={device.status} />
               ))}
             </div>
 
