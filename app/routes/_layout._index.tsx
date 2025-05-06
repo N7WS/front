@@ -1,58 +1,114 @@
 import { useState } from 'react';
 import { useLoaderData } from "@remix-run/react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
+import { Button } from "~/components/ui/button";
 import DeviceCard from "~/components/custom/device-card";
+
+// TODO : remove when transforming card to component
+import DummyGraph from "~/public/dummy/dummy-graph.png";
+import { ServerCogIcon, ServerCrashIcon, ServerOffIcon } from "lucide-react";
+
 
 export async function loader() {
   const res = await fetch("http://localhost:8080/devices");
   return Response.json(await res.json());
 }
 
+interface Device {
+  name: string;
+  cpu: string;
+  ram: number;
+  room: string;
+  deviceConfigs: DeviceConfig[];
+  status: any; // TODO : Fix any
+}
+
+interface DeviceConfig {
+  cpuName: string;
+  ramSize: number;
+}
+
 export default function Index() {
-  const devices = useLoaderData<typeof loader>();
-  const [selectedDevice, setSelectedDevice] = useState(null);
-  const handleSelection = (device : any) => {
-    console.log(device.name);
+  const devices = useLoaderData<Device[]>();
+  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
+  const handleSelection = (device: any) => {
+    setSelectedDevice(device);
+    // console.log("selected: " + (device?.name ?? "null")); // yeah !
   }
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center">
+    <div className="h-full w-full flex flex-row items-center justify-between px-16">
 
-      <Accordion type="single" collapsible className="w-[30%]">
-        <AccordionItem value="item-1">
-          <AccordionTrigger>C201</AccordionTrigger>
-          <AccordionContent>
+      {/* MACHINE SELECTION */}
+      <div className="w-3xl">
+        <Accordion type="single" collapsible className="w-96">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>C201</AccordionTrigger>
+            <AccordionContent>
 
-            <div className="flex flex-col gap-2 w-full">
-              {devices.map((device : any) => (
-                // <DeviceCard name="Morpheus" cpu="cpu" ram={16} room="D208" status="ONLINE" />
-                <DeviceCard
-                  key={device.name}
-                  name={device.name}
-                  cpu={device.deviceConfigs[0]?.cpuName}
-                  ram={device.deviceConfigs[0]?.ramSize}
-                  room={device.room}
-                  status={device.status}
-                  onClick={() => handleSelection(device)}
+              <div className="flex flex-col gap-2 w-full">
+                {devices.map((device: any) => (
+                  <DeviceCard
+                    key={device.name}
+                    name={device.name}
+                    cpu={device.deviceConfigs[0]?.cpuName}
+                    ram={device.deviceConfigs[0]?.ramSize}
+                    room={device.room}
+                    status={device.status}
+                    onClick={() => handleSelection(device)}
                   />
-              ))}
-            </div>
+                ))}
+              </div>
 
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>C202</AccordionTrigger>
-          <AccordionContent>
-            Under construction
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>C203</AccordionTrigger>
-          <AccordionContent>
-            Under construction
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>C202</AccordionTrigger>
+            <AccordionContent>
+              Under construction
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>C203</AccordionTrigger>
+            <AccordionContent>
+              Under construction
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+
+      {/* SELECTED MACHINE */}
+      {/* TODO Convert to component for factorisation */}
+      <div className="w-3xl">
+        <div className="flex flex row items-center gap-2 w-96 bg-blue-400 rounded-t-xl p-2">
+          {(selectedDevice?.status ?? "PENDING") === "ONLINE" ? (
+              <div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">
+                  <ServerCogIcon className="size-8 stroke-[2.5px] stroke-white"/>
+              </div>
+              ) : (selectedDevice?.status ?? "PENDING") === "OFFLINE" ? (
+              <div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">
+                  <ServerCrashIcon className="size-8 stroke-[2.5px] stroke-white"/>
+              </div>) :
+              <div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">
+                  <ServerOffIcon className="size-8 stroke-[2.5px] stroke-white"/>
+              </div>
+            }
+          <p className="text-white font-extrabold">{selectedDevice?.name ?? "Not selected - please select a machine"}</p>
+        </div>
+        <div className="w-96 border-x-2 border-b-2 border-grey-400 rounded-b-xl p-2">
+          <p><span className="font-bold">CPU</span> : {selectedDevice?.deviceConfigs?.[0]?.cpuName ?? "Unknown"}</p>
+          <p><span className="font-bold">RAM</span> : {selectedDevice?.deviceConfigs?.[0]?.ramSize ?? "Unknown"}</p>
+          <p className="pt-[1em] font-semibold">Ping</p>
+          <div className="flex flex-col justify-center items-center pt-6 gap-8">
+            <img alt="logo" src={DummyGraph} className="w-4/5" /> {/* TODO : replace by shadcn graph */}
+            <a> {/* TODO : link with parameter in route etc */}
+            <Button type="button" className="w-40 bg-blue-400 hover:bg-blue-600">Consulter la machine</Button>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   );
 }
