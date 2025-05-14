@@ -1,25 +1,24 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form"
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
 
 import { Eye, EyeOff } from "lucide-react";
 
 import { formSchema } from "~/components/custom/forms/RegisterSchema";
 
 export default function RegisterForm() {
-
     /** Variable réactive pour montrer ou non le mot de passe dans l'input */
     const [isViewPassword, setIsViewPassword] = useState(false);
 
@@ -29,26 +28,19 @@ export default function RegisterForm() {
         defaultValues: { // Très important de définir les valeurs par défaut
             email: "",
             password: "",
-            firstName: "",
-            lastName: "",
+            firstname: "",
+            lastname: "",
         },
     })
-
-    // Action à faire après envoi du form
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-
-        // Envoie de la requête de connection au serveur
-    }
 
     return (
         <div className="flex flex-col items-center">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center pt-10">
+                <form method="post" className="flex flex-col items-center pt-10">
                     <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-4">
                     <FormField
                         control={form.control}
-                        name="firstName"
+                        name="firstname"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Prénom</FormLabel>
@@ -62,7 +54,7 @@ export default function RegisterForm() {
 
                     <FormField
                         control={form.control}
-                        name="lastName"
+                        name="lastname"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Nom</FormLabel>
