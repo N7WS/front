@@ -3,6 +3,7 @@ import { useState } from 'react';
 import DeviceCard from "~/components/custom/device-card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
+import { ScrollArea } from "~/components/ui/scroll-area"
 
 // TODO : remove when transforming card to component
 import { ServerCogIcon, ServerCrashIcon, ServerOffIcon } from "lucide-react";
@@ -37,14 +38,15 @@ export default function Index() {
 	}
 
 	return (
-		<div className="h-full w-full flex flex-row items-center justify-between px-16">
+		<div className="h-full w-full flex flex-row justify-between px-16">
 
 			{/* MACHINE SELECTION */}
-			<div className="w-1/3">
+			<div className="flex w-1/3 items-start">
 				<Accordion type="single" collapsible className="w-full">
 					<AccordionItem value="item-1">
 						<AccordionTrigger>C201</AccordionTrigger>
 						<AccordionContent>
+						<ScrollArea className="h-[30rem] w-full rounded-md border p-4">
 
 							<div className="flex flex-col gap-2 w-full">
 								{devices.map((device: any) => (
@@ -60,6 +62,7 @@ export default function Index() {
 								))}
 							</div>
 
+						</ScrollArea>
 						</AccordionContent>
 					</AccordionItem>
 					<AccordionItem value="item-2">
@@ -79,7 +82,7 @@ export default function Index() {
 
 			{/* SELECTED MACHINE */}
 			{/* TODO Convert to component for factorisation */}
-			<div className="w-1/3">
+			<div className="w-1/3 justify-start">
 				<div className="flex row items-center gap-2 w-full bg-blue-400 rounded-t-xl p-2">
 					{(selectedDevice?.status ?? "PENDING") === "ONLINE" ? (
 							<div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">

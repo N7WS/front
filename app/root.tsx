@@ -33,7 +33,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="overflow-hidden">
+      <body>
         <Outlet />
         <ScrollRestoration />
         <Scripts />
