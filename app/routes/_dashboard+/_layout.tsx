@@ -20,7 +20,9 @@ export default function HeaderLayout() {
               className="h-[2em] rounded-[50%] py-[0.5rem]"
             />
             <a>Benj</a>
-            <LogOut className="w-[1.15em] h-[1.15em] stroke-red-500 stroke-2" />
+            <a href="/login" className="h-full">
+              <LogOut className="w-[1.15em] h-[1.15em] stroke-red-500 stroke-2" />
+            </a>
           </div>
         </div>
         {/* FIN DE HEADER */}
