@@ -10,7 +10,9 @@ export default function HeaderLayout() {
         {/* DEBUT DU HEADER */}
         {/* TODO : transfo en composant*/}
         <div className="flex justify-between items-center h-[4em] w-full px-4">
-          <img alt="logo" src={N7WSlogo} className="h-full p-[0.5em]" />
+          <a href="/" className="h-full">
+            <img alt="logo" src={N7WSlogo} className="h-full p-[0.5em]" />
+          </a>
           <div className="flex items-center gap-[1.5rem] text-[2em] shrink-0">
             <img
               alt="pfp"
