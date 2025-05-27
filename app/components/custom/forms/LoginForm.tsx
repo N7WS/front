@@ -32,17 +32,10 @@ export default function LoginForm() {
         },
     })
 
-    // Action à faire après envoi du form
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-
-        // Envoie de la requête de connection au serveur
-    }
-
     return(
         <div className="flex flex-col pt-10">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center space-y-8">
+                    <form method="post" className="flex flex-col items-center space-y-8">
                         <FormField
                         control={form.control}
                         name="email"

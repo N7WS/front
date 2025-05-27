@@ -12,7 +12,7 @@ export async function action({
 }: ActionFunctionArgs) {
     const body = await request.formData();
 
-    return fetch("http://localhost:8080/users", {
+    return fetch("http://localhost:8080/users/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

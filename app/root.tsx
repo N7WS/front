@@ -45,6 +45,8 @@ export default function App() {
 export function ErrorBoundary() {
   const error = useRouteError();
 
+  console.log(error);
+
   let title = "Unexpected Error";
   let message = "Something went wrong.";
 
