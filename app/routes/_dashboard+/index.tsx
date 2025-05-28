@@ -5,12 +5,25 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/
 import { Button } from "~/components/ui/button";
 
 // TODO : remove when transforming card to component
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { ServerCogIcon, ServerCrashIcon, ServerOffIcon } from "lucide-react";
 import DummyGraph from "~/public/dummy/dummy-graph.png";
 
 
-export async function loader() {
-	const res = await fetch("http://localhost:8080/devices");
+export async function loader({ request }: LoaderFunctionArgs) {
+	// Add bearer token from cookie called "jwt"
+	const token = request.headers.get("Cookie")?.split('; ').find(row => row.startsWith('jwt='))?.split('=')[1] || '';
+	console.log("Token from cookie: ", token);
+	const res = await fetch(
+		"http://localhost:8080/devices", {
+			method: "GET",
+			credentials: "include", // Permet d'accepter les cookies HTTPOnly du backend
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${token}`, // Ajoute le token JWT dans l'en-tête Authorization
+			},
+		}
+	);
 	return Response.json(await res.json());
 }
 

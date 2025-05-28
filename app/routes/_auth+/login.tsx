@@ -1,9 +1,52 @@
-
 import LoginForm from "~/components/custom/forms/LoginForm";
 
 import { Separator } from "~/components/ui/separator";
 
-export default function Login() {
+import { ActionFunctionArgs, createCookie } from "@remix-run/node";
+import { redirect, useActionData } from "@remix-run/react";
+
+export const jwtCookie = createCookie("jwtCookie");
+
+export async function action({
+    request,
+}: ActionFunctionArgs) {
+    const body = await request.formData();
+
+    return fetch("http://localhost:8080/users/login", {
+        method: "POST",
+        credentials: "include", // Permet d'accepter les cookies HTTPOnly du backend
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: body.get("email"),
+            password: body.get("password"),
+        }),
+    }).then((response) => {
+        if (response.ok) {
+            // Le cookie JWT est automatiquement stocké par le navigateur
+            return redirect("/", {
+                headers: {
+                    "Set-Cookie": response.headers.get("Set-Cookie") || "",
+                    "Content-Type": "application/json",
+                }
+            });
+        } else {
+            throw new Response(response.statusText, {
+                status: response.status,
+                statusText: response.statusText,
+            });
+        }
+    }).catch((error) => {
+        throw new Response(error.message, {
+            status: error.status,
+            statusText: error.message,
+        });
+    })
+}
+
+export default function Index() {
+    const data = useActionData<typeof action>();
     return (
         <>
             <LoginForm />
