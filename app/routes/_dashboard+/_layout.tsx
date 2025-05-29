@@ -9,7 +9,7 @@ export default function HeaderLayout() {
       <main className="w-full">
         {/* DEBUT DU HEADER */}
         {/* TODO : transfo en composant*/}
-        <div className="flex justify-between items-center h-[4em] w-full px-4">
+        <div className="flex justify-between items-center h-[4em] w-full px-4 border-[1px] border-solid">
           <a href="/" className="h-full">
             <img alt="logo" src={N7WSlogo} className="h-full p-[0.5em]" />
           </a>
