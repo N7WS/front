@@ -94,10 +94,10 @@ export default function Index() {
 						</div>
 					) : (selectedDevice?.status ?? "PENDING") === "OFFLINE" ? (
 						<div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">
-							<ServerCrashIcon className="size-8 stroke-[2.5px] stroke-white" />
+							<ServerOffIcon className="size-8 stroke-[2.5px] stroke-white" />
 						</div>) :
 						<div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">
-							<ServerOffIcon className="size-8 stroke-[2.5px] stroke-white" />
+							<ServerCrashIcon className="size-8 stroke-[2.5px] stroke-white" />
 						</div>
 					}
 					<p className="text-white font-extrabold">{selectedDevice?.name ?? "Not selected - please select a machine"}</p>
