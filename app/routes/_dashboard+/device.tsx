@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { Button } from "~/components/ui/button";
 
 // TODO : remove when transforming card to component
-import { Wifi, Wrench, ChartArea } from 'lucide-react';
+import { Wifi, Wrench, ChartArea, CircleCheck, CircleEllipsis, CircleX } from 'lucide-react';
 import DummyGraph from "~/public/dummy/dummy-graph.png";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "~/components/ui/breadcrumb";
 
@@ -64,7 +64,7 @@ export default function Device() {
 	const device = useLoaderData<Device>();
 
 	let status = device?.status ?? "PENDING";
-	let bg_color = (status === "ONLINE") ? "bg-blue-400" : ((status === "OFFLINE") ? "bg-red-400" : "bg-gray-300");
+	let status_color = (status === "ONLINE") ? "text-green-400" : ((status === "OFFLINE") ? "text-red-400" : "text-gray-400");
 
 	return (
 		<div className="h-full w-full flex flex-col px-16">
@@ -88,11 +88,27 @@ export default function Device() {
 				<div className="w-full justify-center flex flex-col gap-4"> {/* Gauche */}
 					{/* Configuration */}
 					<div className="w-full">
-						<div className={`flex row items-center gap-2 w-full ${bg_color} rounded-t-xl p-2`}>
+						<div className="flex row items-center gap-2 w-full bg-blue-400 rounded-t-xl p-2">
 							<Wifi className="size-8 stroke-[2px] stroke-white"/>
 							<p className="text-white text-xl font-extrabold">Configuration</p>
 						</div>
 						<div className="border-x-2 border-b-2 w-full border-grey-400 rounded-b-xl p-2">
+							<div className="flex flex-row items-center">
+								<span className="text-black font-bold">Status : </span>
+								{(device?.status ?? "PENDING") === "ONLINE" ? (
+									<div className="flex items-center justify-start rounded-full px-1">
+										<CircleCheck className="size-[1em] stroke-[2.5px] stroke-green-400" />
+									</div>
+								) : (device?.status ?? "PENDING") === "OFFLINE" ? (
+									<div className="flex items-center justify-start rounded-full px-1">
+										<CircleX className="size-[1em] stroke-[2.5px] stroke-red-400" />
+									</div>) :
+									<div className="flex items-center justify-start rounded-full px-1">
+										<CircleEllipsis className="size-[1em] stroke-[2.5px] stroke-gray-400" />
+									</div>
+								}
+								<span className={`font-semibold ${status_color}`}>{device?.status ?? "Unknown"}</span>
+							</div>
 							<p><span className="font-bold">CPU</span> : {device?.deviceConfigs?.[0]?.cpuName ?? "Unknown"}</p>
 							<p><span className="font-bold">RAM</span> : {device?.deviceConfigs?.[0]?.ramSize ?? "Unknown"}</p>
 						</div>
@@ -100,7 +116,7 @@ export default function Device() {
 
 					{/* Statistiques */}
 					<div className="w-full">
-						<div className={`flex row items-center gap-2 w-full ${bg_color} rounded-t-xl p-2`}>
+						<div className="flex row items-center gap-2 w-full bg-blue-400 rounded-t-xl p-2">
 							<div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">
 								<ChartArea className="size-8 stroke-[2px] stroke-white"/>
 							</div>
@@ -117,7 +133,7 @@ export default function Device() {
 
 				<div className="w-full"> {/* Droite */}
 				<div className="w-full">
-						<div className={`flex row items-center gap-2 w-full ${bg_color} rounded-t-xl p-2`}>
+						<div className="flex row items-center gap-2 w-full bg-blue-400 rounded-t-xl p-2">
 							<div className="flex items-center gap-2 justify-start rounded-full p-2 size-10">
 								<Wrench className="size-8 stroke-[2px] stroke-white"/>
 							</div>
