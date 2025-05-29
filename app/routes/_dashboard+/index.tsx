@@ -53,7 +53,7 @@ export default function Index() {
 
 			{/* MACHINE SELECTION */}
 			<div className="flex w-1/3 items-start overflow-hidden">
-				<ScrollArea className="h-[40rem] w-full rounded-md border p-4">
+				<ScrollArea className="h-[40rem] w-full rounded-xl border p-4">
 					<Accordion type="single" collapsible className="w-full">
 						{rooms.map((room: string) => (
 							<AccordionItem value={room}>
@@ -72,6 +72,7 @@ export default function Index() {
 													room={device.room}
 													status={device.status}
 													onClick={() => handleSelection(device)}
+													selected={device.name === selectedDevice?.name}
 												/>
 											))}
 									</div>
